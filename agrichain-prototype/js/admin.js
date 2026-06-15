@@ -30,6 +30,7 @@ function registerStakeholder() {
   document.getElementById('reg-name').value    = '';
   document.getElementById('reg-role').value    = '';
 
+  updateRegisteredCount();
   renderAdminTable();
   refreshDashboard('admin');
   showModal(txHash, block);
@@ -58,4 +59,11 @@ function renderAdminTable() {
       <td><span class="badge badge-blue">${u.role}</span></td>
       <td class="hash">${shortHash(u.txHash)}</td>
     </tr>`).join('');
+}
+
+function updateRegisteredCount() {
+  const countSpan = document.getElementById('registered-count');
+  if (countSpan) {
+    countSpan.innerText = state.users.length;
+  }
 }
