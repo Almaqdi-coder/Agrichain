@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgriChain — IoT Blockchain Platform</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<div class="app">
+
+  <!-- ══════════════════════ NAV BAR ══════════════════════ -->
+  <nav class="nav">
+    <div class="nav-logo" onclick="showScreen('landing')">Agri<span>Chain</span></div>
+    <div class="nav-role" id="navRole" style="display:none"></div>
+    <div class="nav-actions">
+      <button class="nav-btn" id="navArchBtn" style="display:none" onclick="showScreen('architecture')">🏗 Architecture</button>
+      <button class="nav-btn" id="navBack"    style="display:none" onclick="showScreen('home')">⇄ Change Role</button>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- ══════════════════════════════════════════════════
+         SCREEN: LANDING PAGE
+    ══════════════════════════════════════════════════ -->
+    <div class="screen active" id="screen-landing">
+
+      <div class="hero">
+        <div class="hero-logo">Agri<span>Chain</span></div>
+        <div class="hero-tagline">
+          IoT-Enabled Blockchain Platform for Organic Coffee<br>
+          Certification and Supply Chain Traceability
+        </div>
+        <div class="hero-features">
+          <span class="hero-feature">Blockchain Transparency</span>
+          <span class="hero-feature">IoT Sensor Monitoring</span>
+          <span class="hero-feature">Organic Certification</span>
+          <span class="hero-feature">Consumer Verification</span>
+          <span class="hero-feature">IPFS Document Storage</span>
+        </div>
+        <div class="chain-flow-landing">
+          <div class="chain-step-landing"><div class="name">🌱 Input Supplier</div></div>
+          <span class="chain-arrow-landing">→</span>
+          <div class="chain-step-landing"><div class="name">🚜 Farmer</div></div>
+          <span class="chain-arrow-landing">→</span>
+          <div class="chain-step-landing"><div class="name">📜 Certifier</div></div>
+          <span class="chain-arrow-landing">→</span>
+          <div class="chain-step-landing"><div class="name">🚛 Transporter</div></div>
+          <span class="chain-arrow-landing">→</span>
+          <div class="chain-step-landing"><div class="name">🏪 Retailer</div></div>
+          <span class="chain-arrow-landing">→</span>
+          <div class="chain-step-landing"><div class="name">🔍 Consumer</div></div>
+        </div>
+        <button class="btn-enter" onclick="showScreen('home')">Enter Demo System →</button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+        <div class="card" style="margin-bottom:0">
+          <h2>📋 Project Overview</h2>
+          <div class="kv-list">
+            <div class="kv-row"><span class="kv-key">Project</span>     <span class="kv-value">AgriChain — FYP STIZK3993</span></div>
+            <div class="kv-row"><span class="kv-key">Student</span>     <span class="kv-value">Almaqdi Abdulqader · 302268</span></div>
+            <div class="kv-row"><span class="kv-key">Supervisor</span>  <span class="kv-value">Dr. Mohammed Gamal Alsamman</span></div>
+            <div class="kv-row"><span class="kv-key">Product</span>     <span class="kv-value">Organic Specialty Coffee</span></div>
+            <div class="kv-row"><span class="kv-key">Blockchain</span>  <span class="kv-value">Ethereum Sepolia Testnet</span></div>
+            <div class="kv-row"><span class="kv-key">IoT Hardware</span><span class="kv-value">ESP32 / Arduino + DHT22</span></div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <h2>⚙️ Smart Contracts</h2>
+          <div class="kv-list">
+            <div class="kv-row"><span class="kv-key">UserRegistry.sol</span>         <span class="kv-value">Role-based access control</span></div>
+            <div class="kv-row"><span class="kv-key">InputRecord.sol</span>           <span class="kv-value">Farm input traceability</span></div>
+            <div class="kv-row"><span class="kv-key">BatchTracker.sol</span>          <span class="kv-value">Supply chain lifecycle</span></div>
+            <div class="kv-row"><span class="kv-key">CertificationManager.sol</span>  <span class="kv-value">Organic certification</span></div>
+            <div class="kv-row"><span class="kv-key">IPFS / Pinata</span>             <span class="kv-value">Document storage (CID)</span></div>
+            <div class="kv-row"><span class="kv-key">MQTT Broker</span>               <span class="kv-value">IoT data relay (Mosquitto)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="text-align:center;padding:14px">
+        <p style="font-size:.8rem;color:#aaa">
+          Low-Fidelity Prototype v0.1 · All blockchain data is simulated for demonstration
+        </p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         SCREEN: ROLE PICKER
+    ══════════════════════════════════════════════════ -->
+    <div class="screen" id="screen-home">
+      <div class="card">
+        <h2>Select Your Role</h2>
+        <p style="font-size:.85rem;color:#666;margin-bottom:20px">
+          Each role has a dedicated dashboard. Select to enter the AgriChain platform.
+        </p>
+        <div class="role-grid">
+          <div class="role-tile" onclick="selectRole('admin')">
+            <div class="icon">🛡️</div>
+            <div class="label">Administrator</div>
+            <div class="sub">Register stakeholders on-chain</div>
+          </div>
+          <div class="role-tile" onclick="selectRole('supplier')">
+            <div class="icon">🌱</div>
+            <div class="label">Input Supplier</div>
+            <div class="sub">Record agrochemical inputs</div>
+          </div>
+          <div class="role-tile" onclick="selectRole('farmer')">
+            <div class="icon">🚜</div>
+            <div class="label">Farmer</div>
+            <div class="sub">Register batches &amp; monitor IoT</div>
+          </div>
+          <div class="role-tile" onclick="selectRole('certifier')">
+            <div class="icon">📜</div>
+            <div class="label">Certifier</div>
+            <div class="sub">Issue organic certifications</div>
+          </div>
+          <div class="role-tile" onclick="selectRole('transporter')">
+            <div class="icon">🚛</div>
+            <div class="label">Transporter</div>
+            <div class="sub">Track shipment &amp; confirm delivery</div>
+          </div>
+          <div class="role-tile" onclick="selectRole('retailer')">
+            <div class="icon">🏪</div>
+            <div class="label">Retailer</div>
+            <div class="sub">Confirm receipt &amp; generate QR</div>
+          </div>
+          <div class="role-tile" onclick="selectRole('consumer')">
+            <div class="icon">🔍</div>
+            <div class="label">Consumer</div>
+            <div class="sub">Verify product authenticity</div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="text-align:center;padding:12px">
+        <button class="btn btn-secondary btn-sm" onclick="showScreen('architecture')">🏗 View System Architecture</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         SCREEN: SYSTEM ARCHITECTURE
+    ══════════════════════════════════════════════════ -->
+    <div class="screen" id="screen-architecture">
+      <div class="card">
+        <div class="section-header">
+          <h2>🏗 System Architecture</h2>
+          <button class="btn btn-secondary btn-sm" onclick="goHome()">← Back to Roles</button>
+        </div>
+        <p style="font-size:.85rem;color:#555;margin-bottom:20px">
+          AgriChain uses a four-layer architecture: IoT hardware → MQTT middleware → Blockchain → Consumer portal.
+        </p>
+
+        <div class="arch-grid">
+          <!-- Left: data flow -->
+          <div>
+            <h3 style="font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:#777;margin-bottom:14px">Data Flow</h3>
+            <div class="arch-flow">
+              <div class="arch-node">
+                <span class="arch-icon">📡</span>
+                <div class="arch-info">
+                  <div class="arch-name">ESP32 / Arduino Sensors</div>
+                  <div class="arch-tech">DHT22 · Soil Moisture · GPS Module</div>
+                </div>
+              </div>
+              <div class="arch-arrow"></div>
+              <div class="arch-node blue">
+                <span class="arch-icon">📶</span>
+                <div class="arch-info">
+                  <div class="arch-name">MQTT Broker (Mosquitto)</div>
+                  <div class="arch-tech">Wi-Fi · Topic: agrichain/farm/sensors</div>
+                </div>
+              </div>
+              <div class="arch-arrow"></div>
+              <div class="arch-node amber">
+                <span class="arch-icon">⚙️</span>
+                <div class="arch-info">
+                  <div class="arch-name">Node.js Middleware</div>
+                  <div class="arch-tech">Payload validation · Threshold alerts · Wallet signing</div>
+                </div>
+              </div>
+              <div class="arch-arrow"></div>
+              <div class="arch-node purple">
+                <span class="arch-icon">🔗</span>
+                <div class="arch-info">
+                  <div class="arch-name">Ethereum Sepolia Testnet</div>
+                  <div class="arch-tech">Solidity · Hardhat · OpenZeppelin RBAC</div>
+                </div>
+              </div>
+              <div class="arch-arrow"></div>
+              <div class="arch-node teal">
+                <span class="arch-icon">📁</span>
+                <div class="arch-info">
+                  <div class="arch-name">IPFS via Pinata</div>
+                  <div class="arch-tech">Certificate PDF storage · CID on-chain</div>
+                </div>
+              </div>
+              <div class="arch-arrow"></div>
+              <div class="arch-node">
+                <span class="arch-icon">🌐</span>
+                <div class="arch-info">
+                  <div class="arch-name">React Consumer Portal</div>
+                  <div class="arch-tech">MetaMask · QR Scan · Trust Indicator</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: smart contracts + tech stack -->
+          <div>
+            <h3 style="font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:#777;margin-bottom:14px">Smart Contracts</h3>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px">
+              <div class="arch-node purple" style="border-left-color:#7b1fa2">
+                <span class="arch-icon" style="font-size:1rem">📄</span>
+                <div class="arch-info">
+                  <div class="arch-name">UserRegistry.sol</div>
+                  <div class="arch-tech">RBAC · 5 roles · address mapping</div>
+                </div>
+              </div>
+              <div class="arch-node purple" style="border-left-color:#7b1fa2">
+                <span class="arch-icon" style="font-size:1rem">📄</span>
+                <div class="arch-info">
+                  <div class="arch-name">InputRecord.sol</div>
+                  <div class="arch-tech">Agrochemical inputs · compliance flag · IPFS CID</div>
+                </div>
+              </div>
+              <div class="arch-node purple" style="border-left-color:#7b1fa2">
+                <span class="arch-icon" style="font-size:1rem">📄</span>
+                <div class="arch-info">
+                  <div class="arch-name">BatchTracker.sol</div>
+                  <div class="arch-tech">6-stage lifecycle · SensorEvent · GPS handover</div>
+                </div>
+              </div>
+              <div class="arch-node purple" style="border-left-color:#7b1fa2">
+                <span class="arch-icon" style="font-size:1rem">📄</span>
+                <div class="arch-info">
+                  <div class="arch-name">CertificationManager.sol</div>
+                  <div class="arch-tech">Organic / GI / Fair Trade · auto-revert on non-compliant</div>
+                </div>
+              </div>
+            </div>
+
+            <h3 style="font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:#777;margin-bottom:14px">Technology Stack</h3>
+            <div class="tech-stack-grid">
+              <div class="tech-badge"><div class="tb-name">Solidity</div>    <div class="tb-role">Smart contracts</div></div>
+              <div class="tech-badge"><div class="tb-name">Hardhat</div>     <div class="tb-role">Dev framework</div></div>
+              <div class="tech-badge"><div class="tb-name">React.js</div>    <div class="tb-role">Consumer portal</div></div>
+              <div class="tech-badge"><div class="tb-name">Node.js</div>     <div class="tb-role">Middleware</div></div>
+              <div class="tech-badge"><div class="tb-name">ESP32</div>       <div class="tb-role">IoT sensors</div></div>
+              <div class="tech-badge"><div class="tb-name">MQTT</div>        <div class="tb-role">Sensor relay</div></div>
+              <div class="tech-badge"><div class="tb-name">IPFS</div>        <div class="tb-role">Document storage</div></div>
+              <div class="tech-badge"><div class="tb-name">MetaMask</div>    <div class="tb-role">Wallet</div></div>
+              <div class="tech-badge"><div class="tb-name">OpenZeppelin</div><div class="tb-role">RBAC library</div></div>
+              <div class="tech-badge"><div class="tb-name">Pinata</div>      <div class="tb-role">IPFS pinning</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         SCREEN: ADMIN DASHBOARD
+    ══════════════════════════════════════════════════ -->
+    <div class="screen" id="screen-admin">
+      <div class="card">
+        <div class="section-header">
+          <h2>🛡️ Administrator Dashboard</h2>
+          <span class="badge badge-blue">Admin</span>
+        </div>
+        <div class="stats-grid" id="admin-stats"></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+        <div class="card" style="margin-bottom:0">
+          <h2>Recent Activity</h2>
+          <div id="admin-activity"></div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <h2>📡 Network Status</h2>
+          <div class="kv-list">
+            <div class="kv-row"><span class="kv-key">Network</span>    <span class="kv-value"><span class="badge badge-green">Sepolia Testnet</span></span></div>
+            <div class="kv-row"><span class="kv-key">Latest Block</span><span class="kv-value hash">5,823,601</span></div>
+            <div class="kv-row"><span class="kv-key">Contracts</span>  <span class="kv-value">4 deployed</span></div>
+            <div class="kv-row"><span class="kv-key">Gas Used</span>   <span class="kv-value">0.0012 ETH</span></div>
+            <div class="kv-row"><span class="kv-key">IPFS</span>       <span class="kv-value"><span class="badge badge-green">Pinata Online</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="tabs">
+          <div class="tab active" onclick="switchTab(this,'admin-register')">Register Stakeholder</div>
+          <div class="tab"        onclick="switchTab(this,'admin-list')">Registered Users ({{ count }})</div>
+        </div>
+
+        <div id="tab-admin-register">
+          <div id="alert-admin"></div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Ethereum Wallet Address</label>
+              <input type="text" id="reg-address" placeholder="0x…40 hex characters" />
+            </div>
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="reg-name" placeholder="e.g. Ahmad Al-Rashidi" />
+            </div>
+            <div class="form-group">
+              <label>Assign Role</label>
+              <select id="reg-role">
+                <option value="">— Select role —</option>
+                <option>Input Supplier</option>
+                <option>Farmer</option>
+                <option>Certifier</option>
+                <option>Transporter</option>
+                <option>Retailer</option>
+              </select>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary"   onclick="registerStakeholder()">📤 Submit to Blockchain</button>
+            <button class="btn btn-secondary" onclick="fillDemoAdmin()">Fill Demo</button>
+          </div>
+        </div>
+
+        <div id="tab-admin-list" style="display:none">
+          <table>
+            <thead><tr><th>Name</th><th>Wallet</th><th>Role</th><th>Tx Hash</th></tr></thead>
+            <tbody id="admin-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         SCREEN: INPUT SUPPLIER
+    ══════════════════════════════════════════════════ -->
+    <div class="screen" id="screen-supplier">
+      <div class="card">
+        <div class="section-header">
+          <h2>🌱 Input Supplier Dashboard</h2>
+          <span class="badge badge-green">Input Supplier</span>
+        </div>
+        <div class="stats-grid" id="supplier-stats"></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+        <div class="card" style="margin-bottom:0">
+          <h2>Recent Activity</h2>
+          <div id="supplier-activity"></div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <h2>ℹ️ How It Works</h2>
+          <div class="sc-vertical">
+            <div class="sc-stage done">
+              <div class="sc-icon">1</div>
+              <div class="sc-info"><div class="sc-name">Fill Input Form</div><div class="sc-detail">Type, product, qty, compliance</div></div>
+            </div>
+            <div class="sc-connector done"></div>
+            <div class="sc-stage active">
+              <div class="sc-icon">▶</div>
+              <div class="sc-info"><div class="sc-name">Submit to Blockchain</div><div class="sc-detail">InputRecord.sol records on Sepolia</div></div>
+            </div>
+            <div class="sc-connector"></div>
+            <div class="sc-stage pending">
+              <div class="sc-icon">3</div>
+              <div class="sc-info"><div class="sc-name">PDF Pinned to IPFS</div><div class="sc-detail">CID returned for on-chain reference</div></div>
+            </div>
+            <div class="sc-connector"></div>
+            <div class="sc-stage pending">
+              <div class="sc-icon">4</div>
+              <div class="sc-info"><div class="sc-name">Certifier Reads Compliance</div><div class="sc-detail">Compliance flag used during cert issuance</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Record Farm Input</h2>
+        <div id="alert-supplier"></div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Input Type</label>
+            <select id="inp-type">
+              <option value="">— Select type —</option>
+              <option>Organic Fertiliser</option>
+              <option>Manure</option>
+              <option>Soil Amendment</option>
+              <option>Agrochemical</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" id="inp-product" placeholder="e.g. BioGrow NPK 5-5-5" />
+          </div>
+          <div class="form-group">
+            <label>Quantity (kg)</label>
+            <input type="number" id="inp-qty" placeholder="50" />
+          </div>
+          <div class="form-group">
+            <label>Application Date</label>
+            <input type="date" id="inp-date" />
+          </div>
+          <div class="form-group">
+            <label>Compliance Status</label>
+            <select id="inp-compliance">
+              <option value="Compliant">✅ Compliant</option>
+              <option value="Non-Compliant">❌ Non-Compliant</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Field / Plot ID</label>
+            <input type="text" id="inp-field" placeholder="PLOT-07" />
+          </div>
+          <div class="form-group full">
+            <label>IPFS CID (Compliance Document — optional)</label>
+            <input type="text" id="inp-cid" placeholder="Leave blank to auto-generate" />
+          </div>
+          <div class="form-group full">
+            <label>Notes</label>
+            <textarea id="inp-notes" placeholder="Optional notes…"></textarea>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary"   onclick="recordInput()">📤 Submit InputRecord</button>
+          <button class="btn btn-secondary" onclick="fillDemoSupplier()">Fill Demo</button>
+        </div>
+      </div>
+
+      <!-- Post-submit summary (hidden until submitted) -->
+      <div id="input-last-summary" style="display:none"></div>
+
+      <div class="card">
+        <h2>Submitted Input Records</h2>
+        <div id="inputs-empty" class="empty">No records yet — submit your first input above.</div>
+        <table id="inputs-table" style="display:none">
+          <thead><tr><th>ID</th><th>Type</th><th>Product</th><th>Qty</th><th>Date</th><th>Status</th><th>Tx Hash</th></tr></thead>
+          <tbody id="inputs-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         SCREEN: FARMER
+    ══════════════════════════════════════════════════ -->
+    <div class="screen" id="screen-farmer">
+      <div class="card">
+        <div class="section-header">
+          <h2>🚜 Farmer Dashboard</h2>
+          <span class="badge badge-green">Farmer</span>
+        </div>
+        <div class="stats-grid" id="farmer-stats"></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+        <div class="card" style="margin-bottom:0">
+          <h2>Recent Activity</h2>
+          <div id="farmer-activity"></div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <h2>📡 Live IoT Monitoring</h2>
+          <div class="iot-grid" id="sensor-grid">
+            <div class="iot-card"><div class="iot-label">Temperature</div><div class="iot-value">—</div><div class="iot-unit">°C</div></div>
+            <div class="iot-card"><div class="iot-label">Humidity</div>   <div class="iot-value">—</div><div class="iot-unit">%</div></div>
+            <div class="iot-card"><div class="iot-label">Soil Moisture</div><div class="iot-value">—</div><div class="iot-unit">%</div></div>
+            <div class="iot-card"><div class="iot-label">GPS</div>        <div class="iot-value" style="font-size:1rem">—</div></div>
+          </div>
+          <div style="margin-top:10px;display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:.72rem;color:#aaa">Node: ESP32-Soil-01 · MQTT: agrichain/farm/sensors</span>
+            <button class="btn btn-secondary btn-sm" onclick="refreshSensors()">↺ Refresh</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Register Product Batch</h2>
+        <div id="alert-farmer"></div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Batch Name</label>
+            <input type="text" id="bat-name" placeholder="e.g. Highland Arabica Lot A" />
+          </div>
+          <div class="form-group">
+            <label>Coffee Variety</label>
+            <select id="bat-variety">
+              <option>Arabica</option>
+              <option>Robusta</option>
+              <option>Liberica</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Harvest Date</label>
+            <input type="date" id="bat-harvest" />
+          </div>
+          <div class="form-group">
+            <label>Farm Location</label>
+            <input type="text" id="bat-location" placeholder="Cameron Highlands, MY" />
+          </div>
+          <div class="form-group">
+            <label>Weight (kg)</label>
+            <input type="number" id="bat-weight" placeholder="200" />
+          </div>
+          <div class="form-group">
+            <label>GI Region</label>
+            <input type="text" id="bat-gi" placeholder="Sabah GI Zone 3" />
+          </div>
+          <div class="form-group full">
+            <label>Link Input Record IDs (comma-separated)</label>
+            <input type="text" id="bat-inputs" placeholder="INP-001, INP-002" />
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary"   onclick="registerBatch()">📤 Register Batch on Blockchain</button>
+          <button class="btn btn-secondary" onclick="fillDemoFarmer()">Fill Demo</button>
+        </div>
+      </div>
+
+      <!-- Post-submit batch summary (hidden until submitted) -->
+      <div id="batch-last-summary" style="display:none"></div>
+
+      <div class="card">
+        <h2>Registered Batches</h2>
+        <div id="batches-empty" class="empty">No batches yet.</div>
+        <table id="batches-table" style="display:none">
+          <thead><tr><th>Batch ID</th><th>Name</th><th>Variety</th><th>Weight</th><th>Stage</th><th>Tx Hash</th></tr></thead>
+          <tbody id="batches-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         SCREEN: CERTIFIER
+    ══════════════════════════════════════════════════ -->
+    <div class="screen" id="screen-certifier">
+      <div class="card">
+        <div class="section-header">
+          <h2>📜 Certifier Dashboard</h2>
+          <span class="badge badge-blue">Certifier</span>
+        </div>
+        <div class="stats-grid" id="certifier-stats"></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+        <div class="card" style="margin-bottom:0">
+          <h2>Recent Activity</h2>
+          <div id="certifier-activity"></div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <h2>🔍 Compliance Verification</h2>
+          <p style="font-size:.82rem;color:#666;margin-bottom:12px">Enter a Batch ID and run the compliance check before issuing.</p>
+          <div class="form-group" style="margin-bottom:10px">
+            <label>Batch ID to Check</label>
+            <input type="text" id="cert-batch-check" placeholder="BATCH-001" oninput="document.getElementById('cert-batch').value=this.value" />
+          </div>
+          <button class="btn btn-blue btn-sm" onclick="document.getElementById('cert-batch').value=document.getElementById('cert-batch-check').value;runComplianceCheck()">
+            ▶ Run Compliance Check
+          </button>
+          <div id="compliance-result" style="margin-top:14px"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Issue Certification</h2>
+        <div id="alert-certifier"></div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Target Batch ID</label>
+            <input type="text" id="cert-batch" placeholder="BATCH-001" oninput="document.getElementById('cert-batch-check').value=this.value" />
+          </div>
+          <div class="form-group">
+            <label>Certification Type</label>
+            <select id="cert-type">
+              <option value="Organic">🌿 Organic</option>
+              <option value="Fair Trade">⚖️ Fair Trade</option>
+              <option value="GI">📍 Geographical Indication</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Issuing Body</label>
+            <input type="text" id="cert-body" placeholder="Malaysian Organic Alliance" />
+          </div>
+          <div class="form-group">
+            <label>Valid Until</label>
+            <input type="date" id="cert-expiry" />
+          </div>
+          <div class="form-group full">
+            <label>Certificate PDF (uploaded to IPFS via Pinata)</label>
+            <input type="file" id="cert-file" accept=".pdf" />
+          </div>
+          <div class="form-group full">
+            <label>Certifier Notes</label>
+            <textarea id="cert-notes" placeholder="All input records verified on-chain…"></textarea>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary"   onclick="issueCert()">📤 Issue Certification on Blockchain</button>
+          <button class="btn btn-secondary" onclick="fillDemoCert()">Fill Demo</button>
+        </div>
+      </div>
+
+      <div id="cert-last-summary" style="display:none"></div>
+
+      <div class="card">
+        <h2>Issued Certifications</h2>
+        <div id="certs-empty" class="empty">No certifications issued yet.</div>
+        <table id="certs-table" style="display:none">
+          <thead><tr><th>Cert ID</th><th>Batch</th><th>Type</th><th>Issuing Body</th><th>Expiry</th><th>CID</th><th>Status</th></tr></thead>
+          <tbody id="certs-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         SCREEN: TRANSPORTER
+    ══════════════════════════════════════════════════ -->
+    <div class="screen" id="screen-transporter">
+      <div class="card">
+        <div class="section-header">
+          <h2>🚛 Transporter Dashboard</h2>
+          <span class="badge badge-amber">Transporter</span>
+        </div>
+        <div class="stats-grid" id="transporter-stats"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-header">
+          <h2>📡 Live Transit IoT Monitoring</h2>
+          <button class="btn btn-secondary btn-sm" onclick="refreshTransportSensors()">↺ Refresh</button>
+        </div>
+        <div class="iot-grid" id="transport-sensor-grid"></div>
+        <p style="font-size:.72rem;color:#aaa;margin-top:10px">
+          Node: ESP32-Transit-01 · MQTT topic: agrichain/transit/sensors · Refreshes every 5 min
+        </p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+        <div class="card" style="margin-bottom:0">
+          <h2>Recent Activity</h2>
+          <div id="transporter-activity"></div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <h2>Active Shipments</h2>
+          <div id="shipments-empty" class="empty">No active shipments.</div>
+          <table id="shipments-table" style="display:none">
+            <thead><tr><th>ID</th><th>Batch</th><th>From</th><th>To</th><th>GPS</th><th>Status</th></tr></thead>
+            <tbody id="shipments-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Confirm Delivery</h2>
+        <div id="alert-transporter"></div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Batch ID</label>
+            <input type="text" id="transport-batch" placeholder="BATCH-001" />
+          </div>
+          <div class="form-group">
+            <label>Destination</label>
+            <input type="text" id="transport-dest" placeholder="KL Central Warehouse" />
+          </div>
+          <div class="form-group">
+            <label>Current GPS</label>
+            <input type="text" id="transport-gps-live" readonly placeholder="Auto-populated from sensor" />
+          </div>
+          <div class="form-group">
+            <label>Handover Recipient</label>
+            <input type="text" id="transport-recipient" placeholder="Retailer / Warehouse name" />
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary"   onclick="confirmDelivery()">✅ Confirm Delivery On-Chain</button>
+          <button class="btn btn-secondary" onclick="fillDemoTransporter()">Fill Demo</button>
+        </div>
+      </div>
+
+      <div id="transport-delivery-summary" style="display:none"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         SCREEN: RETAILER
+    ══════════════════════════════════════════════════ -->
+    <div class="screen" id="screen-retailer">
+      <div class="card">
+        <div class="section-header">
+          <h2>🏪 Retailer Dashboard</h2>
+          <span class="badge badge-blue">Retailer</span>
+        </div>
+        <div class="stats-grid" id="retailer-stats"></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+        <div class="card" style="margin-bottom:0">
+          <h2>Recent Activity</h2>
+          <div id="retailer-activity"></div>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <h2>ℹ️ Retailer Workflow</h2>
+          <div class="sc-vertical">
+            <div class="sc-stage done">
+              <div class="sc-icon">✓</div>
+              <div class="sc-info"><div class="sc-name">Batch Arrives from Transporter</div><div class="sc-detail">Custody handover recorded on-chain</div></div>
+            </div>
+            <div class="sc-connector done"></div>
+            <div class="sc-stage active">
+              <div class="sc-icon">▶</div>
+              <div class="sc-info"><div class="sc-name">Confirm Receipt</div><div class="sc-detail">BatchTracker.sol marks stage = Received</div></div>
+            </div>
+            <div class="sc-connector"></div>
+            <div class="sc-stage pending">
+              <div class="sc-icon">3</div>
+              <div class="sc-info"><div class="sc-name">Generate QR Code</div><div class="sc-detail">Encodes Batch ID + verification URL</div></div>
+            </div>
+            <div class="sc-connector"></div>
+            <div class="sc-stage pending">
+              <div class="sc-icon">4</div>
+              <div class="sc-info"><div class="sc-name">Consumer Scans QR</div><div class="sc-detail">Full provenance visible on portal</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Confirm Product Receipt</h2>
+        <div id="alert-retailer"></div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Batch ID</label>
+            <input type="text" id="retail-batch" placeholder="BATCH-001" />
+          </div>
+          <div class="form-group">
+            <label>Store / Warehouse</label>
+            <input type="text" id="retail-store" placeholder="BioMart KLCC, Kuala Lumpur" />
+          </div>
+          <div class="form-group">
+            <label>Receipt Date</label>
+            <input type="date" id="retail-date" />
+          </div>
+          <div class="form-group">
+            <label>Units Received</label>
+            <input type="number" id="retail-units" placeholder="50" />
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary"   onclick="confirmReceipt()">✅ Confirm Receipt &amp; Generate QR</button>
+          <button class="btn btn-secondary" onclick="fillDemoRetailer()">Fill Demo</button>
+        </div>
+      </div>
+
+      <!-- QR panel (hidden until confirmed) -->
+      <div id="qr-panel" style="display:none"></div>
+
+      <div class="card">
+        <h2>Confirmed Receipts</h2>
+        <div id="receipts-empty" class="empty">No receipts confirmed yet.</div>
+        <table id="receipts-table" style="display:none">
+          <thead><tr><th>Batch ID</th><th>Date</th><th>Certification</th><th>QR</th><th>Tx Hash</th></tr></thead>
+          <tbody id="receipts-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         SCREEN: CONSUMER VERIFICATION PORTAL
+    ══════════════════════════════════════════════════ -->
+    <div class="screen" id="screen-consumer">
+      <div class="card">
+        <div class="section-header">
+          <h2>🔍 Product Verification Portal</h2>
+          <span class="badge badge-gray">Consumer (Read-Only)</span>
+        </div>
+        <p style="font-size:.85rem;color:#666;margin-bottom:16px">
+          Scan the QR code on your coffee packaging or enter the Batch ID below.
+          All information is retrieved directly from the Sepolia blockchain.
+        </p>
+        <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
+          <div class="form-group" style="flex:1;min-width:200px">
+            <label>Batch ID / QR Code</label>
+            <input type="text" id="verify-id" placeholder="e.g. BATCH-001" />
+          </div>
+          <button class="btn btn-primary"   onclick="verifyProduct()"  style="margin-bottom:5px">🔎 Verify Product</button>
+          <button class="btn btn-secondary" onclick="loadDemoVerify()" style="margin-bottom:5px">Load Demo</button>
+        </div>
+      </div>
+
+      <!-- ── Result panel ── -->
+      <div id="verify-result" style="display:none">
+
+        <!-- Trust Score Panel -->
+        <div class="trust-panel" id="trust-panel">
+          <div class="trust-score-circle">
+            <div class="ts-num" id="trust-score-num">—</div>
+            <div class="ts-label">Trust Score</div>
+          </div>
+          <div class="trust-details">
+            <h2 id="trust-title"></h2>
+            <p  id="trust-desc"></p>
+            <div class="trust-tags" id="trust-tags"></div>
+          </div>
+        </div>
+
+        <!-- Batch Summary -->
+        <div class="card">
+          <h2>📦 Batch Summary</h2>
+          <div id="v-panel"></div>
+        </div>
+
+        <!-- Supply Chain History -->
+        <div class="card">
+          <h2>🔗 Supply Chain History &amp; Blockchain Events</h2>
+          <div id="v-supply-chain"></div>
+        </div>
+
+        <!-- Sensor Records -->
+        <div class="card">
+          <h2>📡 IoT Sensor Records (ESP32)</h2>
+          <div id="v-sensors"></div>
+        </div>
+
+        <!-- Certification -->
+        <div class="card">
+          <h2>📜 Certification Record</h2>
+          <div id="v-cert-body"></div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast notification -->
+<div id="toast"></div>
+
+<!-- Transaction Submitted Modal -->
+<div class="modal-bg" id="modal-tx">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>✅ Transaction Submitted</h2>
+    <div class="alert alert-success">Signed and submitted to Ethereum Sepolia Testnet.</div>
+    <div class="blockchain-widget" style="margin-top:4px">
+      <div class="bw-header"><div class="bw-dot"></div> On-Chain Record</div>
+      <div class="bw-row">
+        <div class="bw-field">
+          <span class="bw-field-label">Transaction Hash</span>
+          <span class="bw-field-value" id="modal-hash"></span>
+        </div>
+        <div class="bw-field">
+          <span class="bw-field-label">Block Number</span>
+          <span class="bw-field-value" id="modal-block"></span>
+        </div>
+        <div class="bw-field">
+          <span class="bw-field-label">Network</span>
+          <span class="bw-field-value bw-network"><span class="bw-network-dot"></span> Ethereum Sepolia Testnet</span>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row" style="margin-top:18px">
+      <button class="btn btn-blue"      onclick="closeModal()">Close</button>
+      <button class="btn btn-secondary" onclick="closeModal()">View on Etherscan ↗</button>
+    </div>
+  </div>
+</div>
+
+<!-- JS files — loaded in dependency order -->
+<script src="js/state.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/sensors.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/supplier.js"></script>
+<script src="js/farmer.js"></script>
+<script src="js/certifier.js"></script>
+<script src="js/transporter.js"></script>
+<script src="js/retailer.js"></script>
+<script src="js/consumer.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
