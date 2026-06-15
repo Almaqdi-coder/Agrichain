@@ -291,7 +291,9 @@
       <div class="card">
         <div class="tabs">
           <div class="tab active" onclick="switchTab(this,'admin-register')">Register Stakeholder</div>
-          <div class="tab"        onclick="switchTab(this,'admin-list')">Registered Users ({{ count }})</div>
+          <div class="tab" onclick="switchTab(this,'admin-list')">
+  Registered Users (<span id="registered-count">0</span>)
+</div>
         </div>
 
         <div id="tab-admin-register">
