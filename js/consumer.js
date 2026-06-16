@@ -138,7 +138,7 @@ function renderSupplyChainHistory(d) {
   ];
 
   document.getElementById('v-supply-chain').innerHTML = `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;flex-wrap:wrap">
+    <div class="grid-2">
       <div>
         <h3 style="font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;color:#777;margin-bottom:12px;">Stage Progress</h3>
         <div class="sc-vertical">${historyHtml}</div>

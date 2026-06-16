@@ -67,7 +67,7 @@ function showBatchSummary(b) {
   container.innerHTML = `
     <div class="card">
       <h2>📦 Batch Summary — ${b.id}</h2>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div class="grid-2">
         <div>
           <div class="kv-list">
             <div class="kv-row"><span class="kv-key">Batch ID</span>     <span class="kv-value">${b.id}</span></div>

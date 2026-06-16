@@ -507,3 +507,112 @@ tr:hover td { background: var(--gray-1); }
 }
 .modal h2 { font-size: 1.05rem; margin-bottom: 16px; }
 .modal-close { float: right; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #888; }
+
+/* ══════════════════════════════════════════════
+   GENERIC 2-COLUMN GRID (collapses on mobile — see media queries)
+══════════════════════════════════════════════ */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE — TABLET (≤ 900px)
+══════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .main { padding: 20px 16px; }
+  .arch-grid { grid-template-columns: 1fr; gap: 28px; }
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE — MOBILE (≤ 640px)
+══════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  /* Nav: stack logo + actions, allow wrap, shrink padding */
+  .nav {
+    height: auto; min-height: 56px; flex-wrap: wrap;
+    padding: 8px 14px; gap: 8px; row-gap: 6px;
+  }
+  .nav-logo { font-size: 1.1rem; flex-shrink: 0; }
+  .nav-role { margin-left: 0; order: 3; font-size: .76rem; padding: 3px 10px; }
+  .nav-actions { margin-left: auto; gap: 6px; }
+  .nav-btn { font-size: .72rem; padding: 5px 9px; }
+
+  .main { padding: 16px 12px; }
+
+  /* Cards: tighten padding */
+  .card { padding: 16px; border-radius: 8px; }
+  .card h2 { font-size: .92rem; }
+
+  /* Hero / landing */
+  .hero { padding: 32px 18px; }
+  .hero-logo { font-size: 2rem; }
+  .hero-tagline { font-size: .9rem; }
+  .hero-feature { font-size: .76rem; padding: 5px 12px; }
+  .chain-flow-landing { flex-direction: column; padding: 14px; gap: 6px; }
+  .chain-step-landing .name { font-size: .76rem; }
+  .chain-arrow-landing { transform: rotate(90deg); padding: 2px 0; }
+  .btn-enter { width: 100%; padding: 13px 0; }
+
+  /* All 2-column layouts collapse to 1 column */
+  .grid-2,
+  .form-grid,
+  .summary-card-body,
+  .arch-grid { grid-template-columns: 1fr; }
+
+  /* Role tiles: 2 per row instead of auto-fill min 150px */
+  .role-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .role-tile { padding: 14px 8px; }
+  .role-tile .icon { font-size: 1.5rem; }
+  .role-tile .label { font-size: .8rem; }
+  .role-tile .sub { font-size: .68rem; }
+
+  /* Stat cards: 2 per row */
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .stat-card { padding: 14px; }
+  .stat-card .stat-val { font-size: 1.5rem; }
+
+  /* IoT cards: 2 per row */
+  .iot-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .iot-card { padding: 12px; }
+  .iot-value { font-size: 1.4rem; }
+
+  /* Tech stack: 2 per row */
+  .tech-stack-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Tables: allow horizontal scroll instead of squeezing columns */
+  .card > table,
+  #tab-admin-list table { display: block; overflow-x: auto; white-space: nowrap; }
+  table thead, table tbody { display: table; width: 100%; }
+
+  /* kv rows: stack label above value on very narrow screens */
+  .kv-row { flex-direction: column; gap: 2px; }
+  .kv-key { width: auto; }
+
+  /* Trust panel: stack circle above text */
+  .trust-panel { flex-direction: column; text-align: center; padding: 20px; }
+  .trust-score-circle { width: 76px; height: 76px; }
+
+  /* Buttons: full-width stacking in forms */
+  .btn-row { flex-direction: column; }
+  .btn-row .btn { width: 100%; justify-content: center; }
+
+  /* Architecture nodes: shrink */
+  .arch-node { padding: 10px 14px; }
+  .arch-icon { font-size: 1.3rem; width: 30px; }
+  .arch-info .arch-name { font-size: .84rem; }
+
+  /* Modal: tighter padding */
+  .modal { padding: 20px; }
+
+  /* Toast: full-width near bottom */
+  #toast { left: 16px; right: 16px; bottom: 16px; max-width: none; }
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE (≤ 340px)
+══════════════════════════════════════════════ */
+@media (max-width: 340px) {
+  .role-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .iot-grid { grid-template-columns: 1fr; }
+  .tech-stack-grid { grid-template-columns: 1fr; }
+  .hero-logo { font-size: 1.7rem; }
+}
